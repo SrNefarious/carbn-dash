@@ -8,8 +8,8 @@ const stages = [
   { name: "Last Mile Payout", status: "pending" },
 ]
 
-export function TransactionFlow({ status }) {
-  const getStageStatus = (index) => {
+export function TransactionFlow({ status }: { status: "Completed" | "Retrying" | "Pending" }) {
+  const getStageStatus = (index: number) => {
     if (status === "Completed") return "completed"
     if (status === "Retrying") return index === stages.length - 1 ? "retrying" : "completed"
     if (status === "Pending") {

@@ -1,12 +1,19 @@
-"use client"
-
-import { useState } from "react"
+import React, { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog"
 
-const alerts = [
+interface Alert {
+  id: number
+  type: string
+  description: string
+  severity: string
+  timestamp: string
+  action: string
+}
+
+const alerts: Alert[] = [
   {
     id: 1,
     type: "Suspicious Activity",
@@ -50,7 +57,7 @@ const alerts = [
 ]
 
 export function AlertsMonitoring() {
-  const [selectedAlert, setSelectedAlert] = useState(null)
+  const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null)
 
   return (
     <>
@@ -93,18 +100,10 @@ export function AlertsMonitoring() {
               <DialogTitle>{selectedAlert.type}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <p>
-                <strong>Description:</strong> {selectedAlert.description}
-              </p>
-              <p>
-                <strong>Severity:</strong> {selectedAlert.severity}
-              </p>
-              <p>
-                <strong>Timestamp:</strong> {selectedAlert.timestamp}
-              </p>
-              <p>
-                <strong>Recommended Action:</strong> {selectedAlert.action}
-              </p>
+              <p><strong>Description:</strong> {selectedAlert.description}</p>
+              <p><strong>Severity:</strong> {selectedAlert.severity}</p>
+              <p><strong>Timestamp:</strong> {selectedAlert.timestamp}</p>
+              <p><strong>Recommended Action:</strong> {selectedAlert.action}</p>
             </div>
             <DialogClose asChild>
               <Button>Close</Button>
@@ -115,4 +114,3 @@ export function AlertsMonitoring() {
     </>
   )
 }
-

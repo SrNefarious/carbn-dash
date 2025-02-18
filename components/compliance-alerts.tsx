@@ -7,7 +7,14 @@ import { AlertTriangle, AlertCircle, Info } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
-const complianceAlerts = [
+const complianceAlerts: Array<{
+  id: number
+  type: string
+  severity: "High" | "Medium" | "Low"
+  description: string
+  timestamp: string
+  recommendedAction: string
+}> = [
   {
     id: 1,
     type: "High Risk Customer",
@@ -52,9 +59,9 @@ const complianceAlerts = [
 
 export function ComplianceAlerts() {
   const [showAllAlerts, setShowAllAlerts] = useState(false)
-  const [selectedAlert, setSelectedAlert] = useState(null)
+  const [selectedAlert, setSelectedAlert] = useState<(typeof complianceAlerts)[number] | null>(null)
 
-  const getAlertIcon = (severity) => {
+  const getAlertIcon = (severity: "High" | "Medium" | "Low") => {
     switch (severity) {
       case "High":
         return <AlertTriangle className="h-5 w-5 text-red-500" />

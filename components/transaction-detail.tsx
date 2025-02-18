@@ -177,9 +177,11 @@ export function TransactionDetail({ transaction, onClose }: TransactionDetailPro
                               ? "bg-green-100"
                               : status === "in-progress"
                                 ? "bg-blue-100"
-                                : status === "failed"
-                                  ? "bg-red-100"
-                                  : "bg-gray-100"
+                                : status === "retrying"
+                                  ? "bg-orange-100"
+                                  : status === "pending"
+                                    ? "bg-yellow-100"
+                                    : "bg-gray-100"
                           }`}
                       >
                         <StageIcon
@@ -191,7 +193,9 @@ export function TransactionDetail({ transaction, onClose }: TransactionDetailPro
                                   ? "text-blue-500"
                                   : status === "retrying"
                                     ? "text-orange-500"
-                                    : "text-gray-400"
+                                    : status === "pending"
+                                      ? "text-yellow-500"
+                                      : "text-gray-400"
                             }`}
                         />
                       </div>

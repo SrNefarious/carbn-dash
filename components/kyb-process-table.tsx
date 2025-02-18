@@ -5,7 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ArrowUpDown } from "lucide-react"
 
-const kybProcesses = [
+interface KYBProcess {
+  id: string
+  customer: string
+  status: string
+  riskScore: string
+  lastUpdated: string
+}
+
+const kybProcesses: KYBProcess[] = [
   { id: "KYB001", customer: "Acme Inc", status: "Approved", riskScore: "Low", lastUpdated: "2023-05-15" },
   { id: "KYB002", customer: "TechCorp", status: "In Review", riskScore: "Medium", lastUpdated: "2023-05-14" },
   { id: "KYB003", customer: "Global Traders", status: "Pending", riskScore: "High", lastUpdated: "2023-05-13" },
@@ -14,10 +22,12 @@ const kybProcesses = [
 ]
 
 export function KYBProcessTable() {
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" })
+  const [sortConfig, setSortConfig] = useState<{ key: keyof KYBProcess | null; direction: "ascending" | "descending" }>(
+    { key: null, direction: "ascending" },
+  )
 
-  const requestSort = (key) => {
-    let direction = "ascending"
+  const requestSort = (key: keyof KYBProcess) => {
+    let direction: "ascending" | "descending" = "ascending"
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending"
     }

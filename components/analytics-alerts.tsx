@@ -7,7 +7,19 @@ import { AlertTriangle, TrendingUp, TrendingDown, Info } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
-const analyticsAlerts = [
+interface Alert {
+  id: number
+  type: string
+  severity: "High" | "Medium" | "Low"
+  description: string
+  timestamp: string
+  affectedMetric: string
+  currentValue: string
+  previousValue: string
+  recommendedAction: string
+}
+
+const analyticsAlerts: Alert[] = [
   {
     id: 1,
     type: "Unusual Volume Spike",
@@ -45,9 +57,9 @@ const analyticsAlerts = [
 
 export function AnalyticsAlerts() {
   const [showAllAlerts, setShowAllAlerts] = useState(false)
-  const [selectedAlert, setSelectedAlert] = useState(null)
+  const [selectedAlert, setSelectedAlert] = useState<Alert | null>(null)
 
-  const getAlertIcon = (severity) => {
+  const getAlertIcon = (severity: Alert["severity"]) => {
     switch (severity) {
       case "High":
         return <AlertTriangle className="h-5 w-5 text-red-500" />

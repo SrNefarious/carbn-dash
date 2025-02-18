@@ -14,7 +14,15 @@ const data = [
   { date: "2023-05-07", cost: 4800 },
 ]
 
-const CustomTooltip = ({ active, payload, label }) => {
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: {
+  active?: boolean
+  payload?: Array<{ value: number }>
+  label?: string
+}) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white p-2 border border-gray-200 rounded shadow-md">

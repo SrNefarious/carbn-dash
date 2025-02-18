@@ -11,21 +11,26 @@ import { formatCurrency } from "@/utils/currency-formatter"
 
 export function RecentTransactions() {
   const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "ascending" })
+  const [sortConfig, setSortConfig] = useState<{
+    key: keyof Transaction | null
+    direction: "ascending" | "descending"
+  }>({ key: null, direction: "ascending" })
 
   const sortedTransactions = [...recentTransactions].sort((a, b) => {
     if (!sortConfig.key) return 0
-    if (a[sortConfig.key] < b[sortConfig.key]) {
+    const aValue = a[sortConfig.key]
+    const bValue = b[sortConfig.key]
+    if (aValue < bValue) {
       return sortConfig.direction === "ascending" ? -1 : 1
     }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
+    if (aValue > bValue) {
       return sortConfig.direction === "ascending" ? 1 : -1
     }
     return 0
   })
 
-  const requestSort = (key) => {
-    let direction = "ascending"
+  const requestSort = (key: keyof Transaction) => {
+    let direction: "ascending" | "descending" = "ascending"
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending"
     }

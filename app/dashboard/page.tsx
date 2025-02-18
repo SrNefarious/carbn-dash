@@ -60,13 +60,13 @@ export default function DashboardPage() {
             <div className="bg-yellow-100 p-3 rounded-full mr-4">
               <DollarSign className="h-6 w-6 text-yellow-500" />
             </div>
-            <h3 className="text-lg font-medium text-gray-700">Today's Volume</h3>
+            <h3 className="text-lg font-medium text-gray-700">Today&apos;s Volume</h3>
           </div>
           <div className="flex justify-between items-end">
             <p className="text-3xl font-bold text-yellow-500">
               ${dailyVolume.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </p>
-            <p className="text-sm text-green-500">+{Math.floor(Math.random() * 5) + 3}% from yesterday</p>
+            <p className="text-sm text-green-500">+{Math.floor(Math.random() * 5) + 3}% from yesterday&apos;s volume</p>
           </div>
         </div>
       </div>

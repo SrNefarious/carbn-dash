@@ -1,11 +1,11 @@
-export type Currency = "USD" | "GBP" | "EUR" | "MXN" | "JPY" | "SGD"
+export type Currency = "USD" | "GBP" | "EUR" | "MXN" | "JPY" | "SGD" | "AUD" | "CAD"
 
 export interface Transaction {
   id: string
   amount: number
   fromCurrency: Currency
   toCurrency: Currency
-  status: "Completed" | "Pending" | "Retrying"
+  status: "Completed" | "Pending" | "Retrying" | "In Progress"
   date: string
   fees: number
   exchangeRate: number
@@ -18,35 +18,27 @@ const exchangeRates: Record<string, number> = {
   USDMXN: 17.53,
   USDJPY: 141.76,
   USDSGD: 1.34,
+  USDAUD: 1.42,
+  USDCAD: 1.28,
   GBPUSD: 1.27,
   GBPEUR: 1.17,
   GBPMXN: 22.22,
   GBPJPY: 179.62,
   GBPSGD: 1.7,
+  GBPAUD: 1.8,
+  GBPCAD: 1.62,
   EURUSD: 1.09,
   EURGBP: 0.86,
   EURMXN: 19.06,
   EURJPY: 154.09,
   EURSGD: 1.46,
-  MXNUSD: 0.057,
-  MXNGBP: 0.045,
-  MXNEUR: 0.052,
-  MXNJPY: 8.08,
-  MXNSGD: 0.077,
-  JPYUSD: 0.0071,
-  JPYGBP: 0.0056,
-  JPYEUR: 0.0065,
-  JPYMXN: 0.12,
-  JPYSGD: 0.0095,
-  SGDUSD: 0.75,
-  SGDGBP: 0.59,
-  SGDEUR: 0.69,
-  SGDMXN: 13.09,
-  SGDJPY: 105.79,
+  EURAUD: 1.54,
+  EURCAD: 1.39,
+  // Add more exchange rates as needed
 }
 
 const generateRandomTransaction = (): Transaction => {
-  const currencies: Currency[] = ["USD", "GBP", "EUR", "MXN", "JPY", "SGD"]
+  const currencies: Currency[] = ["USD", "GBP", "EUR", "MXN", "JPY", "SGD", "AUD", "CAD"]
   const fromCurrency = currencies[Math.floor(Math.random() * currencies.length)]
   let toCurrency
   do {
@@ -55,9 +47,16 @@ const generateRandomTransaction = (): Transaction => {
 
   const amount = Math.floor(Math.random() * 10000) + 100 // Random amount between 100 and 10100
   const fees = amount * 0.01 // 1% fee
-  const exchangeRate = exchangeRates[`${fromCurrency}${toCurrency}`]
+  const exchangeRate = exchangeRates[`${fromCurrency}${toCurrency}`] || 1
 
-  const statuses: Transaction["status"][] = ["Completed", "Completed", "Completed", "Pending", "Retrying"]
+  const statuses: Transaction["status"][] = [
+    "Completed",
+    "Completed",
+    "Completed",
+    "Pending",
+    "Retrying",
+    "In Progress",
+  ]
   const status = statuses[Math.floor(Math.random() * statuses.length)]
 
   const date = new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString().split("T")[0]

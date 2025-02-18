@@ -21,7 +21,6 @@ interface AlertDetailProps {
 }
 
 export function AlertDetail({ alert, onClose }: AlertDetailProps) {
-}
   const getAlertIcon = () => {
     switch (alert.severity) {
       case "High":
@@ -32,6 +31,8 @@ export function AlertDetail({ alert, onClose }: AlertDetailProps) {
         return <AlertTriangle className="w-12 h-12 text-blue-500" />
     }
   }
+
+
 
   const getAlertColor = () => {
     switch (alert.severity) {
