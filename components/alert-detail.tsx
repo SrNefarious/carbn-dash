@@ -1,11 +1,27 @@
-"use client"
-
+import React from 'react'
 import { motion } from "framer-motion"
 import { Dialog, DialogContent } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import { AlertTriangle, XCircle, Calendar, User, Shield, Activity } from "lucide-react"
+import { AlertTriangle, XCircle, Calendar, User, Shield, Activity } from 'lucide-react'
 
-export function AlertDetail({ alert, onClose }) {
+interface Alert {
+  severity: 'High' | 'Medium' | 'Low'
+  type: string
+  description: string
+  timestamp: string
+  affectedUser?: string
+  riskLevel?: string
+  status?: string
+  action: string
+}
+
+interface AlertDetailProps {
+  alert: Alert
+  onClose: () => void
+}
+
+export function AlertDetail({ alert, onClose }: AlertDetailProps) {
+}
   const getAlertIcon = () => {
     switch (alert.severity) {
       case "High":
