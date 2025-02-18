@@ -1,27 +1,24 @@
 import type React from "react"
-import type { Metadata } from "next"
-import { Montserrat } from "next/font/google"
-import "./globals.css"
-import { NavigationProvider } from "@/contexts/navigation-context"
+import dynamic from "next/dynamic"
 
-const montserrat = Montserrat({ subsets: ["latin"] })
+const SideNavigation = dynamic(() => import("@/components/side-navigation"), { ssr: false })
+const TopBar = dynamic(() => import("@/components/top-bar"), { ssr: false })
 
-export const metadata: Metadata = {
-  title: "Carbn Dashboard",
-  description: "Modern financial transaction monitoring dashboard",
-}
-
-export default function RootLayout({
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={montserrat.className}>
-        <NavigationProvider>{children}</NavigationProvider>
-      </body>
-    </html>
+    <div className="flex flex-col h-screen bg-gray-100">
+      <TopBar />
+      <div className="flex flex-1 overflow-hidden">
+        <SideNavigation />
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
+          <div className="container mx-auto px-6 py-8">{children}</div>
+        </main>
+      </div>
+    </div>
   )
 }
 
