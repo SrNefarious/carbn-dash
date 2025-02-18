@@ -1,24 +1,34 @@
 import type React from "react"
-import dynamic from "next/dynamic"
+import type { Metadata } from "next"
+import { Montserrat } from "next/font/google"
+import "./globals.css"
+import { NavigationProvider } from "@/contexts/navigation-context"
 
-const SideNavigation = dynamic(() => import("@/components/side-navigation"), { ssr: false })
-const TopBar = dynamic(() => import("@/components/top-bar"), { ssr: false })
+const montserrat = Montserrat({ subsets: ["latin"] })
 
-export default function DashboardLayout({
+export const metadata: Metadata = {
+  title: "Carbn Dashboard",
+  description: "Modern financial transaction monitoring dashboard",
+  metadataBase: new URL("https://your-production-url.vercel.app"),
+}
+
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col h-screen bg-gray-100">
-      <TopBar />
-      <div className="flex flex-1 overflow-hidden">
-        <SideNavigation />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-50">
-          <div className="container mx-auto px-6 py-8">{children}</div>
-        </main>
-      </div>
-    </div>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
+      <body className={`${montserrat.className} min-h-screen bg-background`}>
+        <NavigationProvider>{children}</NavigationProvider>
+      </body>
+    </html>
   )
 }
 
